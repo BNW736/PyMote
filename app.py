@@ -1,39 +1,21 @@
-import streamlit as st
-import requests
+from fastapi import FastAPI
+import schemas
+from main import my_game 
 
-if st.button("START THE GAME"):
-    start_number = 1
-    payload={
-        "start":start_number
+app = FastAPI()
+#To start and stop the game
+@app.post("/start_game",response_model=schemas.start)
+def start(game_start:schemas.start):
+    start_game=game_start.start
+    my_game.starts(start_game)
+    return{
+        "start":start_game
     }
-    requests.post("http://127.0.0.1:8000/start_game",json=payload)
-if st.button("move_left"):
-    move_number=1
-    payload = {
-        "act": move_number 
+#For the movements in the game
+@app.post("/move", response_model=schemas.moves)  
+def moving(player_moves: schemas.moves):
+    player_act = player_moves.act
+    my_game.play(player_act)
+    return {
+        "act": player_act
     }
-    requests.post("http://127.0.0.1:8000/move", json=payload)
-if st.button("move_down"):
-    move_number=2
-    payload = {
-        "act": move_number 
-    }
-    requests.post("http://127.0.0.1:8000/move", json=payload)
-if st.button("move_right"):
-    move_number=0
-    payload = {
-        "act": move_number 
-    }
-    requests.post("http://127.0.0.1:8000/move", json=payload)
-if st.button("move_up"):
-    move_number=3
-    payload = {
-        "act": move_number 
-    }
-    requests.post("http://127.0.0.1:8000/move", json=payload)
-if st.button("STOP_GAME"):
-    start_number = 2
-    payload={
-        "start":start_number
-    }
-    requests.post("http://127.0.0.1:8000/start_game",json=payload)
