@@ -3,6 +3,8 @@ A modular, multi-tier Python project that allows you to control a local Pygame a
 ## why?
 I originally created this project with the goal of rendering the Pygame environment on my mobile device, but I soon realized that Pygame must render locally on the host machine.
 
+I realized that this could be used by developers to control machines and robots from their phones.
+
 This project demonstrates how to decouple game logic from user input by using FastAPI as a bridge between a Streamlit web controller and a Pygame rendering window.
 
  ## Architecture
